@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
                 MainScreenContent()
             }
         }
+        io.korostenskyi.shared.networking.fetchData()
     }
 }
 

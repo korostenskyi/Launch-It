@@ -40,9 +40,21 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
-        val androidMain by getting
-        val iosMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-core:1.5.4")
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-android:1.5.4")
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:1.5.4")
+            }
+        }
     }
 }
 
