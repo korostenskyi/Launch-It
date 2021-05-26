@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization")
 }
 
 group = "io.korostenskyi"
@@ -22,13 +23,6 @@ android {
         minSdk = 24
         targetSdk = 30
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        compose = true
-    }
 }
 kotlin {
     android()
@@ -42,12 +36,16 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation("io.github.aakira:napier:1.5.0")
                 implementation("io.ktor:ktor-client-core:1.5.4")
+                implementation("io.ktor:ktor-client-logging:1.5.4")
+                implementation("io.ktor:ktor-client-serialization:1.5.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:1.5.4")
+                implementation("io.ktor:ktor-client-okhttp:1.5.4")
             }
         }
         val iosMain by getting {

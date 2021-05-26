@@ -16,6 +16,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.0.0-beta07")
     implementation("androidx.compose.ui:ui-tooling:1.0.0-beta07")
     implementation("androidx.activity:activity-compose:1.3.0-alpha08")
+    implementation("io.insert-koin:koin-android:3.0.2")
 }
 
 android {
