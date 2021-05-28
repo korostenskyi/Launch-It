@@ -8,20 +8,20 @@
 
 import shared
 
-class PostsViewModel : ObservableObject {
+class MainViewModel : ObservableObject {
     
-    @Published var posts = [Post]()
+    @Published var capsules = [Capsule]()
     
-    private let interactor: PostInteractor
+    private let interactor: CapsuleInteractor
     
-    init(interactor: PostInteractor) {
+    init(interactor: CapsuleInteractor) {
         self.interactor = interactor
     }
     
     func loadData() {
-        interactor.retrievePosts { [weak self] result, error in
+        interactor.retrieveCapsules { [weak self] result, error in
             if let result = result {
-                self?.posts.append(contentsOf: result)
+                self?.capsules.append(contentsOf: result)
             } else if let error = error {
                 print(error)
             }

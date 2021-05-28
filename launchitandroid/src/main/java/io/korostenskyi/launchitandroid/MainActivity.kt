@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
-import io.korostenskyi.shared.model.Post
+import io.korostenskyi.shared.model.Capsule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
@@ -34,32 +34,31 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PostCard(post: Post) {
+fun CapsuleCard(capsule: Capsule) {
     Card(
         elevation = 12.dp,
         modifier = Modifier.clickable {  }
     ) {
         Column {
             Text(
-                text = post.title,
+                text = capsule.type,
                 fontWeight = FontWeight.Bold
             )
-            Text(text = post.body)
         }
     }
 }
 
 @Composable
-fun PostList(posts: List<Post>) {
+fun CapsuleList(capsules: List<Capsule>) {
     LazyColumn {
-        items(posts) { post ->
-            PostCard(post)
+        items(capsules) { capsule ->
+            CapsuleCard(capsule)
         }
     }
 }
 
 @Composable
 fun MainScreenContent(viewModel: MainViewModel) {
-    val posts = viewModel.postFlow.collectAsState()
-    PostList(posts.value)
+    val capsules = viewModel.capsulesFlow.collectAsState()
+    CapsuleList(capsules.value)
 }

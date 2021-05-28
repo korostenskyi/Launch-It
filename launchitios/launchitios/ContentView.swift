@@ -3,15 +3,13 @@ import shared
 
 struct ContentView: View {
     
-    @ObservedObject var viewModel: PostsViewModel
+    @ObservedObject var viewModel: MainViewModel
     
     var body: some View {
-        List(viewModel.posts, id: \.id) { post in
+        List(viewModel.capsules, id: \.id) { capsule in
             VStack(alignment: .leading) {
-                Text(post.title)
+                Text(capsule.type)
                     .font(.headline)
-                Text(post.body)
-                    .font(.subheadline)
             }
         }.onAppear {
             viewModel.loadData()
