@@ -13,14 +13,14 @@ class PostsViewModel : ObservableObject {
     
     @Published var posts = [Post]()
     
-    private let api: JsonPlaceholderApi
+    private let interactor: PostInteractor
     
-    init(api: JsonPlaceholderApi) {
-        self.api = api
+    init(interactor: PostInteractor) {
+        self.interactor = interactor
     }
     
-    func fetchData() {
-        api.fetchPosts {[weak self] result, error in
+    func loadData() {
+        interactor.retrievePosts { [weak self] result, error in
             if let result = result {
                 self?.posts.append(contentsOf: result)
             } else if let error = error {

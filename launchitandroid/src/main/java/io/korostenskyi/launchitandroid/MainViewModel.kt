@@ -2,15 +2,15 @@ package io.korostenskyi.launchitandroid
 
 import androidx.lifecycle.viewModelScope
 import io.korostenskyi.launchitandroid.ui.base.BaseViewModel
-import io.korostenskyi.shared.network.api.JsonPlaceholderApi
-import io.korostenskyi.shared.network.model.Post
+import io.korostenskyi.shared.interactor.PostInteractor
+import io.korostenskyi.shared.model.Post
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val api: JsonPlaceholderApi
+    private val postInteractor: PostInteractor
 ) : BaseViewModel() {
 
     private var loadingJob: Job? = null
@@ -22,7 +22,7 @@ class MainViewModel(
 
     fun loadData() {
         loadingJob = viewModelScope.launch {
-            val posts = api.fetchPosts()
+            val posts = postInteractor.retrievePosts()
             _postsFlow.emit(posts)
         }
     }

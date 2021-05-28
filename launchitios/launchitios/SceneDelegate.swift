@@ -13,8 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let api: JsonPlaceholderApi = JsonPlaceholderApiImpl()
-        let postsViewModel = PostsViewModel(api: api)
+        let postInteractor: PostInteractor = PostInteractorImpl()
+        let postsViewModel = PostsViewModel(interactor: postInteractor)
         let contentView = ContentView(viewModel: postsViewModel)
 
         // Use a UIHostingController as window root view controller.

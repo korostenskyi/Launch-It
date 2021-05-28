@@ -1,8 +1,5 @@
-package io.korostenskyi.shared.network.model
+package io.korostenskyi.shared.model
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class Post(
     val userId: Int,
     val id: Int,

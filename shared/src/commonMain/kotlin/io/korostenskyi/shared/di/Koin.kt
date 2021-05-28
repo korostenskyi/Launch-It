@@ -10,4 +10,4 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) {
     }
 }
 
-fun commonModule() = networkModule
+fun commonModule() = networkModule + interactorModule + repositoryModule
