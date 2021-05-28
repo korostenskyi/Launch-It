@@ -2,18 +2,18 @@ package io.korostenskyi.launchitandroid
 
 import androidx.lifecycle.viewModelScope
 import io.korostenskyi.launchitandroid.ui.base.BaseViewModel
-import io.korostenskyi.shared.Greeting
-import io.korostenskyi.shared.Post
+import io.korostenskyi.shared.network.api.JsonPlaceholderApi
+import io.korostenskyi.shared.network.model.Post
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel : BaseViewModel() {
+class MainViewModel(
+    private val api: JsonPlaceholderApi
+) : BaseViewModel() {
 
     private var loadingJob: Job? = null
-
-    private val greeting = Greeting()
 
     private val _postsFlow = MutableStateFlow<List<Post>>(emptyList())
 
@@ -22,7 +22,7 @@ class MainViewModel : BaseViewModel() {
 
     fun loadData() {
         loadingJob = viewModelScope.launch {
-            val posts = greeting.fetchPosts()
+            val posts = api.fetchPosts()
             _postsFlow.emit(posts)
         }
     }

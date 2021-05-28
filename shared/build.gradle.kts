@@ -8,6 +8,14 @@ plugins {
 
 group = "io.korostenskyi"
 version = "1.0-SNAPSHOT"
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xuse-experimental=kotlin.time.ExperimentalTime", "-Xobjc-generics")
+    }
+}
+
 android {
     configurations {
         create("androidTestApi")
@@ -22,6 +30,10 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 30
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 kotlin {
@@ -41,6 +53,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:1.5.4")
                 implementation("io.ktor:ktor-client-serialization:1.5.4")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
+                implementation("io.insert-koin:koin-core:3.0.2")
             }
         }
         val androidMain by getting {

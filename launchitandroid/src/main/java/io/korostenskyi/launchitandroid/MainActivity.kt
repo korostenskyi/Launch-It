@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.unit.dp
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
-import io.korostenskyi.shared.Post
+import io.korostenskyi.shared.network.model.Post
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
