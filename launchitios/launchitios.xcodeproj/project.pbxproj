@@ -616,7 +616,7 @@
 				7555FFA4242A565B00829871 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "launchitios" */ = {
 			isa = XCConfigurationList;
@@ -625,7 +625,7 @@
 				7555FFA7242A565B00829871 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		7555FFA8242A565B00829871 /* Build configuration list for PBXNativeTarget "launchitiosTests" */ = {
 			isa = XCConfigurationList;
@@ -634,7 +634,7 @@
 				7555FFAA242A565B00829871 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		7555FFAB242A565B00829871 /* Build configuration list for PBXNativeTarget "launchitiosUITests" */ = {
 			isa = XCConfigurationList;
@@ -643,7 +643,7 @@
 				7555FFAD242A565B00829871 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
