@@ -6,7 +6,9 @@ import io.korostenskyi.shared.network.api.impl.SpaceXApiImpl
 import io.korostenskyi.shared.network.httpClient
 import io.korostenskyi.shared.network.mapping.NetworkMappingUtil
 import io.korostenskyi.shared.network.source.CapsulesNetworkDataSource
+import io.korostenskyi.shared.network.source.LaunchesNetworkDataSource
 import io.korostenskyi.shared.network.source.impl.CapsulesNetworkDataSourceImpl
+import io.korostenskyi.shared.network.source.impl.LaunchesNetworkDataSourceImpl
 import io.korostenskyi.shared.util.initLogger
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
@@ -19,6 +21,8 @@ import org.koin.dsl.module
 val networkModule = module {
 
     single<CapsulesNetworkDataSource> { CapsulesNetworkDataSourceImpl(api = get(), mapper = get()) }
+
+    single<LaunchesNetworkDataSource> { LaunchesNetworkDataSourceImpl(api = get(), mapper = get()) }
 
     single<SpaceXApi> { SpaceXApiImpl(client = get()) }
 
