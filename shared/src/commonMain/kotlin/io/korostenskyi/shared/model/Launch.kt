@@ -9,9 +9,9 @@ data class Launch(
 ) {
 
     data class Fairings(
-        val isReused: Boolean,
-        val isRecoveryAttempt: Boolean,
-        val isRecovered: Boolean,
+        val isReused: Boolean?,
+        val isRecoveryAttempt: Boolean?,
+        val isRecovered: Boolean?,
         val shipIds: List<String>
     )
 

@@ -11,17 +11,27 @@ import shared
 class MainViewModel : ObservableObject {
     
     @Published var capsules = [Capsule]()
+    @Published var launches = [Launch]()
     
-    private let interactor: CapsuleInteractor
+    private let capsulesinteractor: CapsuleInteractor
+    private let launchesInteractor: LaunchesInteractor
     
-    init(interactor: CapsuleInteractor) {
-        self.interactor = interactor
+    init(capsulesinteractor: CapsuleInteractor, launchesInteractor: LaunchesInteractor) {
+        self.capsulesinteractor = capsulesinteractor
+        self.launchesInteractor = launchesInteractor
     }
     
     func loadData() {
-        interactor.retrieveCapsules { [weak self] result, error in
+        capsulesinteractor.retrieveCapsules { [weak self] result, error in
             if let result = result {
                 self?.capsules.append(contentsOf: result)
+            } else if let error = error {
+                print(error)
+            }
+        }
+        launchesInteractor.retrieveUpcomingLaunches { [weak self] result, error in
+            if let result = result {
+                self?.launches.append(contentsOf: result)
             } else if let error = error {
                 print(error)
             }

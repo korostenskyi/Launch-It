@@ -14,9 +14,9 @@ data class LaunchResponse(
 
     @Serializable
     data class FairingsResponse(
-        @SerialName("reused") val isReused: Boolean,
-        @SerialName("recovery_attempt") val isRecoveryAttempt: Boolean,
-        @SerialName("recovered") val isRecovered: Boolean,
+        @SerialName("reused") val isReused: Boolean?,
+        @SerialName("recovery_attempt") val isRecoveryAttempt: Boolean?,
+        @SerialName("recovered") val isRecovered: Boolean?,
         @SerialName("ships") val shipIds: List<String>
     )
 
