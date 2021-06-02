@@ -27,7 +27,12 @@ class NetworkMappingUtil {
             details = response.details,
             isUpcoming = response.isUpcoming,
             fairings = response.fairings?.let(::map),
-            links = map(response.links)
+            links = map(response.links),
+            isSuccessful = response.isSuccessful,
+            capsulesId = response.capsulesId,
+            shipIds = response.shipIds,
+            crewIds = response.crewIds,
+            dateUtc = response.dateUtc
         )
     }
 

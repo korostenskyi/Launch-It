@@ -9,7 +9,12 @@ data class LaunchResponse(
     @SerialName("details") val details: String?,
     @SerialName("upcoming") val isUpcoming: Boolean,
     @SerialName("fairings") val fairings: FairingsResponse?,
-    @SerialName("links") val links: LinksResponse
+    @SerialName("links") val links: LinksResponse,
+    @SerialName("success") val isSuccessful: Boolean?,
+    @SerialName("capsules") val capsulesId: List<String>,
+    @SerialName("ships") val shipIds: List<String>,
+    @SerialName("crew") val crewIds: List<String>,
+    @SerialName("date_utc") val dateUtc: String
 ) {
 
     @Serializable

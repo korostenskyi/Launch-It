@@ -5,7 +5,12 @@ data class Launch(
     val details: String?,
     val isUpcoming: Boolean,
     val fairings: Fairings?,
-    val links: Links
+    val links: Links,
+    val isSuccessful: Boolean?,
+    val capsulesId: List<String>,
+    val shipIds: List<String>,
+    val crewIds: List<String>,
+    val dateUtc: String
 ) {
 
     data class Fairings(
