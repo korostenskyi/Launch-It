@@ -6,6 +6,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LaunchResponse(
     @SerialName("id") val id: String,
+    @SerialName("name") val name: String,
+    @SerialName("flight_number") val flightNumber: Int,
     @SerialName("details") val details: String?,
     @SerialName("upcoming") val isUpcoming: Boolean,
     @SerialName("fairings") val fairings: FairingsResponse?,

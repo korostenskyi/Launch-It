@@ -24,6 +24,8 @@ class NetworkMappingUtil {
     fun map(response: LaunchResponse): Launch {
         return Launch(
             id = response.id,
+            name = response.name,
+            flightNumber = response.flightNumber,
             details = response.details,
             isUpcoming = response.isUpcoming,
             fairings = response.fairings?.let(::map),
