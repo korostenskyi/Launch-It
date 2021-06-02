@@ -3,10 +3,19 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization")
 }
 
 group = "io.korostenskyi"
 version = "1.0-SNAPSHOT"
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+        freeCompilerArgs = listOf("-Xuse-experimental=kotlin.time.ExperimentalTime", "-Xobjc-generics")
+    }
+}
+
 android {
     configurations {
         create("androidTestApi")
@@ -23,11 +32,8 @@ android {
         targetSdk = 30
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    buildFeatures {
-        compose = true
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 kotlin {
@@ -40,9 +46,26 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
-        val androidMain by getting
-        val iosMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("io.github.aakira:napier:1.5.0")
+                implementation("io.ktor:ktor-client-core:1.5.4")
+                implementation("io.ktor:ktor-client-logging:1.5.4")
+                implementation("io.ktor:ktor-client-serialization:1.5.4")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
+                implementation("io.insert-koin:koin-core:3.0.2")
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-okhttp:1.5.4")
+            }
+        }
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:1.5.4")
+            }
+        }
     }
 }
 

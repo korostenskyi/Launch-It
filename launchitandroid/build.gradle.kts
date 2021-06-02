@@ -16,6 +16,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.0.0-beta07")
     implementation("androidx.compose.ui:ui-tooling:1.0.0-beta07")
     implementation("androidx.activity:activity-compose:1.3.0-alpha08")
+    implementation("io.insert-koin:koin-android:3.0.2")
 }
 
 android {
@@ -33,14 +34,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     buildFeatures {
         compose = true
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
         useIR = true
     }
 }
