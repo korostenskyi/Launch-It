@@ -14,13 +14,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Create the SwiftUI view that provides the window contents.
         let capsuleInteractor: CapsuleInteractor = CapsuleInteractorImpl()
         let launchesInteractor: LaunchesInteractor = LaunchesInteractorImpl()
-        let mainViewModel = MainViewModel(capsulesinteractor: capsuleInteractor, launchesInteractor: launchesInteractor)
-        let contentView = ContentView(viewModel: mainViewModel)
+        
+        let capsulesViewModel = CapsulesViewModel(capsulesinteractor: capsuleInteractor)
+        let launchesViewModel = LaunchesViewModel(launchesInteractor: launchesInteractor)
+        
+        let capsulesScreen = CapsulesScreen(viewModel: capsulesViewModel)
+        let launchesScreen = LaunchesScreen(viewModel: launchesViewModel)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            window.rootViewController = UIHostingController(rootView: launchesScreen)
             self.window = window
             window.makeKeyAndVisible()
         }
