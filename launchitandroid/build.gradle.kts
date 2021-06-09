@@ -18,6 +18,8 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.3.0-alpha08")
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha01")
     implementation("io.insert-koin:koin-android:3.0.2")
+    implementation("com.arkivanov.mvikotlin:mvikotlin:2.0.3")
+    implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.3")
 }
 
 android {

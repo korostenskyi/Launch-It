@@ -3,7 +3,6 @@ package io.korostenskyi.launchitandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,32 +15,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.arkivanov.mvikotlin.extensions.coroutines.states
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
 import io.korostenskyi.shared.model.Capsule
 import io.korostenskyi.shared.model.Launch
+import io.korostenskyi.shared.presentation.screen.launches.LaunchesListStore
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModel<MainViewModel>()
+    private val launchesStore by inject<LaunchesListStore>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             LaunchItTheme {
-                LaunchItApp(viewModel)
+                LaunchItApp(viewModel, launchesStore)
             }
         }
     }
@@ -58,13 +59,13 @@ sealed class Screen(val route: String, val label: String) {
 }
 
 @Composable
-fun LaunchItApp(viewModel: MainViewModel) {
+fun LaunchItApp(viewModel: MainViewModel, store: LaunchesListStore) {
     val screens = listOf(Screen.Capsules, Screen.Launches)
-    MainScreen(viewModel, screens).also { viewModel.loadData() }
+    MainScreen(viewModel, store, screens).also { viewModel.loadData() }
 }
 
 @Composable
-fun MainScreen(viewModel: MainViewModel, screens: List<Screen>) {
+fun MainScreen(viewModel: MainViewModel, store: LaunchesListStore, screens: List<Screen>) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
@@ -97,7 +98,7 @@ fun MainScreen(viewModel: MainViewModel, screens: List<Screen>) {
                 CapsulesScreen(viewModel)
             }
             composable(Screen.Launches.route) {
-                LaunchesScreen(viewModel)
+                LaunchesScreen(store)
             }
         }
     }
@@ -110,9 +111,10 @@ fun CapsulesScreen(viewModel: MainViewModel) {
 }
 
 @Composable
-fun LaunchesScreen(viewModel: MainViewModel) {
-    val launches = viewModel.launchesFlow.collectAsState()
-    LaunchList(launches.value)
+fun LaunchesScreen(store: LaunchesListStore) {
+    store.accept(LaunchesListStore.Intent.FetchAll)
+    val launches = store.states.collectAsState(initial = LaunchesListStore.State())
+    LaunchList(launches.value.launches)
 }
 
 @Composable

@@ -48,12 +48,26 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+
+                // Napier
                 implementation("io.github.aakira:napier:1.5.0")
+
+                // Ktor
                 implementation("io.ktor:ktor-client-core:1.5.4")
                 implementation("io.ktor:ktor-client-logging:1.5.4")
                 implementation("io.ktor:ktor-client-serialization:1.5.4")
+
+                // Koltinx Serialization
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
+
+                // Koin
                 implementation("io.insert-koin:koin-core:3.0.2")
+
+                // MVI Kotlin
+                implementation("com.arkivanov.mvikotlin:mvikotlin:2.0.3")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-main:2.0.3")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-logging:2.0.3")
+                implementation("com.arkivanov.mvikotlin:mvikotlin-extensions-coroutines:2.0.3")
             }
         }
         val androidMain by getting {
