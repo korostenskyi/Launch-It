@@ -1,8 +1,8 @@
-package io.korostenskyi.shared.repository.impl
+package io.korostenskyi.shared.data.repository.impl
 
 import io.korostenskyi.shared.model.Launch
-import io.korostenskyi.shared.network.source.LaunchesNetworkDataSource
-import io.korostenskyi.shared.repository.LaunchesRepository
+import io.korostenskyi.shared.data.network.source.LaunchesNetworkDataSource
+import io.korostenskyi.shared.data.repository.LaunchesRepository
 
 class LaunchesRepositoryImpl(
     private val dataSource: LaunchesNetworkDataSource

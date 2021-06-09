@@ -1,8 +1,8 @@
-package io.korostenskyi.shared.network.api.impl
+package io.korostenskyi.shared.data.network.api.impl
 
-import io.korostenskyi.shared.network.api.SpaceXApi
-import io.korostenskyi.shared.network.model.CapsuleResponse
-import io.korostenskyi.shared.network.model.LaunchResponse
+import io.korostenskyi.shared.data.network.api.SpaceXApi
+import io.korostenskyi.shared.data.network.model.CapsuleResponse
+import io.korostenskyi.shared.data.network.model.LaunchResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.request.*
 

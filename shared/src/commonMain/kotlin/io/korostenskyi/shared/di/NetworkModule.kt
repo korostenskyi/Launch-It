@@ -1,14 +1,14 @@
 package io.korostenskyi.shared.di
 
 import io.github.aakira.napier.Napier
-import io.korostenskyi.shared.network.api.SpaceXApi
-import io.korostenskyi.shared.network.api.impl.SpaceXApiImpl
-import io.korostenskyi.shared.network.httpClient
-import io.korostenskyi.shared.network.mapping.NetworkMappingUtil
-import io.korostenskyi.shared.network.source.CapsulesNetworkDataSource
-import io.korostenskyi.shared.network.source.LaunchesNetworkDataSource
-import io.korostenskyi.shared.network.source.impl.CapsulesNetworkDataSourceImpl
-import io.korostenskyi.shared.network.source.impl.LaunchesNetworkDataSourceImpl
+import io.korostenskyi.shared.data.network.api.SpaceXApi
+import io.korostenskyi.shared.data.network.api.impl.SpaceXApiImpl
+import io.korostenskyi.shared.data.network.httpClient
+import io.korostenskyi.shared.data.network.mapping.NetworkMappingUtil
+import io.korostenskyi.shared.data.network.source.CapsulesNetworkDataSource
+import io.korostenskyi.shared.data.network.source.LaunchesNetworkDataSource
+import io.korostenskyi.shared.data.network.source.impl.CapsulesNetworkDataSourceImpl
+import io.korostenskyi.shared.data.network.source.impl.LaunchesNetworkDataSourceImpl
 import io.korostenskyi.shared.util.initLogger
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*

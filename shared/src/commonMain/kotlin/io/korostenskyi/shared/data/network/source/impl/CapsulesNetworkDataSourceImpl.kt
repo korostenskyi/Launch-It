@@ -1,9 +1,9 @@
-package io.korostenskyi.shared.network.source.impl
+package io.korostenskyi.shared.data.network.source.impl
 
 import io.korostenskyi.shared.model.Capsule
-import io.korostenskyi.shared.network.api.SpaceXApi
-import io.korostenskyi.shared.network.mapping.NetworkMappingUtil
-import io.korostenskyi.shared.network.source.CapsulesNetworkDataSource
+import io.korostenskyi.shared.data.network.api.SpaceXApi
+import io.korostenskyi.shared.data.network.mapping.NetworkMappingUtil
+import io.korostenskyi.shared.data.network.source.CapsulesNetworkDataSource
 
 class CapsulesNetworkDataSourceImpl(
     private val api: SpaceXApi,

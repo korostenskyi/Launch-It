@@ -1,9 +1,9 @@
-package io.korostenskyi.shared.network.mapping
+package io.korostenskyi.shared.data.network.mapping
 
 import io.korostenskyi.shared.model.Capsule
 import io.korostenskyi.shared.model.Launch
-import io.korostenskyi.shared.network.model.CapsuleResponse
-import io.korostenskyi.shared.network.model.LaunchResponse
+import io.korostenskyi.shared.data.network.model.CapsuleResponse
+import io.korostenskyi.shared.data.network.model.LaunchResponse
 
 class NetworkMappingUtil {
 

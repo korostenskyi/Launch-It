@@ -1,4 +1,4 @@
-package io.korostenskyi.shared.network.model
+package io.korostenskyi.shared.data.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

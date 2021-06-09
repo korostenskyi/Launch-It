@@ -1,4 +1,4 @@
-package io.korostenskyi.shared.repository
+package io.korostenskyi.shared.data.repository
 
 import io.korostenskyi.shared.model.Capsule
 

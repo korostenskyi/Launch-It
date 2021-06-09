@@ -1,8 +1,8 @@
-package io.korostenskyi.shared.repository.impl
+package io.korostenskyi.shared.data.repository.impl
 
 import io.korostenskyi.shared.model.Capsule
-import io.korostenskyi.shared.network.source.CapsulesNetworkDataSource
-import io.korostenskyi.shared.repository.CapsulesRepository
+import io.korostenskyi.shared.data.network.source.CapsulesNetworkDataSource
+import io.korostenskyi.shared.data.repository.CapsulesRepository
 
 class CapsulesRepositoryImpl(
     private val dataSource: CapsulesNetworkDataSource

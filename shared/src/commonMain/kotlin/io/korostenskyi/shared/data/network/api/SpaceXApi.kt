@@ -1,7 +1,7 @@
-package io.korostenskyi.shared.network.api
+package io.korostenskyi.shared.data.network.api
 
-import io.korostenskyi.shared.network.model.CapsuleResponse
-import io.korostenskyi.shared.network.model.LaunchResponse
+import io.korostenskyi.shared.data.network.model.CapsuleResponse
+import io.korostenskyi.shared.data.network.model.LaunchResponse
 
 interface SpaceXApi {
 
