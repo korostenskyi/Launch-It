@@ -37,7 +37,10 @@ val networkModule = module {
                 }
             }
             install(JsonFeature) {
-                val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+                val json = kotlinx.serialization.json.Json {
+                    ignoreUnknownKeys = true
+                    coerceInputValues = true
+                }
                 serializer = KotlinxSerializer(json)
             }
             defaultRequest {

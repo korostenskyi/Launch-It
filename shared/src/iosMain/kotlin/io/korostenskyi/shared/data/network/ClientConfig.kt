@@ -1,4 +1,4 @@
-package io.korostenskyi.shared.network
+package io.korostenskyi.shared.data.network
 
 import io.ktor.client.*
 import io.ktor.client.engine.ios.*

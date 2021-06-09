@@ -8,7 +8,7 @@ data class CapsuleResponse(
     @SerialName("reuse_count") val reuseCount: Int,
     @SerialName("water_landings") val waterLandings: Int,
     @SerialName("last_landings") val landLandings: Int? = null,
-    @SerialName("last_update") val lastUpdate: String,
+    @SerialName("last_update") val lastUpdate: String?,
     @SerialName("launches") val launchesIds: List<String>,
     @SerialName("serial") val serial: String,
     @SerialName("status") val status: String,
