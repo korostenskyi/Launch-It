@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
@@ -45,6 +46,8 @@ class MainActivity : ComponentActivity() {
                 LaunchItApp(capsulesStore, launchesStore)
             }
         }
+        launchesStore.accept(LaunchesListStore.Intent.LoadData)
+        capsulesStore.accept(CapsulesListStore.Intent.LoadData)
     }
 }
 
@@ -101,16 +104,14 @@ fun MainScreen(capsulesStore: CapsulesListStore, launchesStore: LaunchesListStor
 
 @Composable
 fun CapsulesScreen(store: CapsulesListStore) {
-    store.accept(CapsulesListStore.Intent.LoadData)
-    val capsules = store.states.collectAsState(initial = CapsulesListStore.State())
-    CapsuleList(capsules.value.capsules)
+    val state = store.states.collectAsState(initial = CapsulesListStore.State())
+    CapsuleList(state.value.capsules)
 }
 
 @Composable
 fun LaunchesScreen(store: LaunchesListStore) {
-    store.accept(LaunchesListStore.Intent.LoadData)
-    val launches = store.states.collectAsState(initial = LaunchesListStore.State())
-    LaunchList(launches.value.launches)
+    val state = store.states.collectAsState(initial = LaunchesListStore.State())
+    LaunchList(state.value.launches)
 }
 
 @Composable

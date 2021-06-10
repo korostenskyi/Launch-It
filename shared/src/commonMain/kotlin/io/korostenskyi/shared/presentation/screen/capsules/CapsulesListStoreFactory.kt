@@ -29,9 +29,13 @@ class CapsulesListStoreFactory(
             intent: CapsulesListStore.Intent,
             getState: () -> CapsulesListStore.State
         ) {
-            interactor.retrieveCapsules()
-                .let(Result::Loaded)
-                .also(::dispatch)
+            when (intent) {
+                is CapsulesListStore.Intent.LoadData -> {
+                    interactor.retrieveCapsules()
+                        .let(Result::Loaded)
+                        .also(::dispatch)
+                }
+            }
         }
     }
 

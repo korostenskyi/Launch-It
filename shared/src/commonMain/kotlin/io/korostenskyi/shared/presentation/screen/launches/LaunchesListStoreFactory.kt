@@ -29,9 +29,13 @@ class LaunchesListStoreFactory(
             intent: LaunchesListStore.Intent,
             getState: () -> LaunchesListStore.State
         ) {
-            interactor.retrieveAllLaunches()
-                .let(Result::Loaded)
-                .also(::dispatch)
+            when (intent) {
+                is LaunchesListStore.Intent.LoadData -> {
+                    interactor.retrieveAllLaunches()
+                        .let(Result::Loaded)
+                        .also(::dispatch)
+                }
+            }
         }
     }
 
