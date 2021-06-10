@@ -6,7 +6,7 @@ import io.korostenskyi.shared.model.Launch
 interface LaunchesListStore : Store<LaunchesListStore.Intent, LaunchesListStore.State, Nothing> {
 
     sealed class Intent {
-        object FetchAll : Intent()
+        object LoadData : Intent()
     }
 
     data class State(

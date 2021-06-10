@@ -29,27 +29,22 @@ import com.arkivanov.mvikotlin.extensions.coroutines.states
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
 import io.korostenskyi.shared.model.Capsule
 import io.korostenskyi.shared.model.Launch
+import io.korostenskyi.shared.presentation.screen.capsules.CapsulesListStore
 import io.korostenskyi.shared.presentation.screen.launches.LaunchesListStore
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModel<MainViewModel>()
     private val launchesStore by inject<LaunchesListStore>()
+    private val capsulesStore by inject<CapsulesListStore>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             LaunchItTheme {
-                LaunchItApp(viewModel, launchesStore)
+                LaunchItApp(capsulesStore, launchesStore)
             }
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.cancel()
     }
 }
 
@@ -59,13 +54,13 @@ sealed class Screen(val route: String, val label: String) {
 }
 
 @Composable
-fun LaunchItApp(viewModel: MainViewModel, store: LaunchesListStore) {
+fun LaunchItApp(capsulesStore: CapsulesListStore, launchesStore: LaunchesListStore) {
     val screens = listOf(Screen.Capsules, Screen.Launches)
-    MainScreen(viewModel, store, screens).also { viewModel.loadData() }
+    MainScreen(capsulesStore, launchesStore, screens)
 }
 
 @Composable
-fun MainScreen(viewModel: MainViewModel, store: LaunchesListStore, screens: List<Screen>) {
+fun MainScreen(capsulesStore: CapsulesListStore, launchesStore: LaunchesListStore, screens: List<Screen>) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
@@ -95,24 +90,25 @@ fun MainScreen(viewModel: MainViewModel, store: LaunchesListStore, screens: List
     ) {
         NavHost(navController, startDestination = Screen.Capsules.route) {
             composable(Screen.Capsules.route) {
-                CapsulesScreen(viewModel)
+                CapsulesScreen(capsulesStore)
             }
             composable(Screen.Launches.route) {
-                LaunchesScreen(store)
+                LaunchesScreen(launchesStore)
             }
         }
     }
 }
 
 @Composable
-fun CapsulesScreen(viewModel: MainViewModel) {
-    val capsules = viewModel.capsulesFlow.collectAsState()
-    CapsuleList(capsules.value)
+fun CapsulesScreen(store: CapsulesListStore) {
+    store.accept(CapsulesListStore.Intent.LoadData)
+    val capsules = store.states.collectAsState(initial = CapsulesListStore.State())
+    CapsuleList(capsules.value.capsules)
 }
 
 @Composable
 fun LaunchesScreen(store: LaunchesListStore) {
-    store.accept(LaunchesListStore.Intent.FetchAll)
+    store.accept(LaunchesListStore.Intent.LoadData)
     val launches = store.states.collectAsState(initial = LaunchesListStore.State())
     LaunchList(launches.value.launches)
 }
