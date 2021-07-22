@@ -3,34 +3,20 @@ package io.korostenskyi.launchitandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.arkivanov.mvikotlin.extensions.coroutines.states
+import androidx.navigation.NavType
+import androidx.navigation.compose.*
+import io.korostenskyi.launchitandroid.ui.navigation.Screen
+import io.korostenskyi.launchitandroid.ui.screen.capsules.CapsulesScreen
+import io.korostenskyi.launchitandroid.ui.screen.launchDetails.LaunchDetailsScreen
+import io.korostenskyi.launchitandroid.ui.screen.launches.LaunchesScreen
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
-import io.korostenskyi.shared.model.Capsule
-import io.korostenskyi.shared.model.Launch
 import io.korostenskyi.shared.presentation.screen.capsules.CapsulesListStore
+import io.korostenskyi.shared.presentation.screen.launchDetails.LaunchDetailsStore
 import io.korostenskyi.shared.presentation.screen.launches.LaunchesListStore
 import org.koin.android.ext.android.inject
 
@@ -38,12 +24,13 @@ class MainActivity : ComponentActivity() {
 
     private val launchesStore by inject<LaunchesListStore>()
     private val capsulesStore by inject<CapsulesListStore>()
+    private val launchDetailsStore by inject<LaunchDetailsStore>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             LaunchItTheme {
-                LaunchItApp(capsulesStore, launchesStore)
+                LaunchItApp(capsulesStore, launchesStore, launchDetailsStore)
             }
         }
         launchesStore.accept(LaunchesListStore.Intent.LoadData)
@@ -51,19 +38,22 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-sealed class Screen(val route: String, val label: String) {
-    object Capsules : Screen("capsules", "Capsules")
-    object Launches : Screen("launches", "Launches")
+@Composable
+fun LaunchItApp(
+    capsulesStore: CapsulesListStore,
+    launchesStore: LaunchesListStore,
+    launchDetailsStore: LaunchDetailsStore
+) {
+    MainScreen(capsulesStore, launchesStore, launchDetailsStore)
 }
 
 @Composable
-fun LaunchItApp(capsulesStore: CapsulesListStore, launchesStore: LaunchesListStore) {
+fun MainScreen(
+    capsulesStore: CapsulesListStore,
+    launchesStore: LaunchesListStore,
+    launchDetailsStore: LaunchDetailsStore
+) {
     val screens = listOf(Screen.Capsules, Screen.Launches)
-    MainScreen(capsulesStore, launchesStore, screens)
-}
-
-@Composable
-fun MainScreen(capsulesStore: CapsulesListStore, launchesStore: LaunchesListStore, screens: List<Screen>) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
@@ -96,83 +86,16 @@ fun MainScreen(capsulesStore: CapsulesListStore, launchesStore: LaunchesListStor
                 CapsulesScreen(capsulesStore)
             }
             composable(Screen.Launches.route) {
-                LaunchesScreen(launchesStore)
+                LaunchesScreen(launchesStore, navController)
             }
-        }
-    }
-}
-
-@Composable
-fun CapsulesScreen(store: CapsulesListStore) {
-    val state = store.states.collectAsState(initial = CapsulesListStore.State())
-    CapsuleList(state.value.capsules)
-}
-
-@Composable
-fun LaunchesScreen(store: LaunchesListStore) {
-    val state = store.states.collectAsState(initial = LaunchesListStore.State())
-    LaunchList(state.value.launches)
-}
-
-@Composable
-fun CapsuleList(capsules: List<Capsule>) {
-    LazyColumn {
-        items(capsules) { capsule ->
-            CapsuleCard(capsule)
-        }
-    }
-}
-
-@Composable
-fun CapsuleCard(capsule: Capsule) {
-    Card(
-        shape = MaterialTheme.shapes.large,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { },
-        border = BorderStroke(1.dp, SolidColor(Color.Black))
-    ) {
-        Text(
-            text = capsule.type,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(24.dp)
-        )
-    }
-}
-
-@Composable
-fun LaunchList(launches: List<Launch>) {
-    LazyColumn {
-        items(launches) { launch ->
-            LaunchCard(launch)
-        }
-    }
-}
-
-@Composable
-fun LaunchCard(launch: Launch) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Column(Modifier.padding(16.dp)) {
-            Text(
-                text = "#${launch.flightNumber}",
-                fontStyle = FontStyle.Normal,
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-            Row {
-                Text(text = launch.name)
-                Spacer(modifier = Modifier.weight(1f))
-                if (launch.isSuccessful != null) {
-                    if (launch.isSuccessful == true) {
-                        Text(text = "Successful", color = Color.Green)
-                    } else {
-                        Text(text = "Failure", color = Color.Red)
-                    }
-                } else if (launch.isUpcoming) {
-                    Text(text = "Upcoming...", color = Color.Blue)
+            composable(
+                route = Screen.LaunchDetails.route,
+                arguments = listOf(
+                    navArgument("launchId") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                backStackEntry.arguments?.getString("launchId")?.let { launchId ->
+                    LaunchDetailsScreen(launchDetailsStore, launchId)
                 }
             }
         }
