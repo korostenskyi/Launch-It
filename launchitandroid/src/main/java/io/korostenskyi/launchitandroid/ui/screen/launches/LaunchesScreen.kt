@@ -14,18 +14,12 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.arkivanov.mvikotlin.extensions.coroutines.states
 import io.korostenskyi.shared.model.Launch
-import io.korostenskyi.shared.presentation.screen.launches.LaunchesListStore
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun LaunchesScreen(store: LaunchesListStore, navController: NavController) {
-    val state = store.states.collectAsState(initial = LaunchesListStore.State())
-    LaunchList(state.value.launches, navController)
-}
-
-@Composable
-fun LaunchList(launches: List<Launch>, navController: NavController) {
+fun LaunchesScreen(navController: NavController, viewModel: LaunchesViewModel = getViewModel()) {
+    val launches = viewModel.launchesFlow.collectAsState().value
     LazyColumn {
         items(launches) { launch ->
             LaunchCard(launch) {

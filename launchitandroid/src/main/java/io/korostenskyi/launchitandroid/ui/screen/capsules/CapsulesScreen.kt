@@ -16,32 +16,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.arkivanov.mvikotlin.extensions.coroutines.states
 import io.korostenskyi.shared.model.Capsule
-import io.korostenskyi.shared.presentation.screen.capsules.CapsulesListStore
+import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun CapsulesScreen(store: CapsulesListStore) {
-    val state = store.states.collectAsState(initial = CapsulesListStore.State())
-    CapsuleList(state.value.capsules)
-}
-
-@Composable
-fun CapsuleList(capsules: List<Capsule>) {
+fun CapsulesScreen(viewModel: CapsulesViewModel = getViewModel()) {
+    val capsules = viewModel.capsulesFlow.collectAsState()
     LazyColumn {
-        items(capsules) { capsule ->
-            CapsuleCard(capsule)
+        items(capsules.value) { capsule ->
+            CapsuleCard(capsule) {
+                println(it.id)
+            }
         }
     }
 }
 
 @Composable
-fun CapsuleCard(capsule: Capsule) {
+fun CapsuleCard(capsule: Capsule, onClick: (Capsule) -> Unit) {
     Card(
         shape = MaterialTheme.shapes.large,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { },
+            .clickable { onClick(capsule) },
         border = BorderStroke(1.dp, SolidColor(Color.Black))
     ) {
         Text(

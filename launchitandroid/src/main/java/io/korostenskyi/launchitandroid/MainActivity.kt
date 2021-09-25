@@ -10,49 +10,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import androidx.navigation.navArgument
 import io.korostenskyi.launchitandroid.ui.navigation.Screen
 import io.korostenskyi.launchitandroid.ui.screen.capsules.CapsulesScreen
 import io.korostenskyi.launchitandroid.ui.screen.launchDetails.LaunchDetailsScreen
 import io.korostenskyi.launchitandroid.ui.screen.launches.LaunchesScreen
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
-import io.korostenskyi.shared.presentation.screen.capsules.CapsulesListStore
-import io.korostenskyi.shared.presentation.screen.launchDetails.LaunchDetailsStore
-import io.korostenskyi.shared.presentation.screen.launches.LaunchesListStore
-import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
-
-    private val launchesStore by inject<LaunchesListStore>()
-    private val capsulesStore by inject<CapsulesListStore>()
-    private val launchDetailsStore by inject<LaunchDetailsStore>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LaunchItTheme {
-                LaunchItApp(capsulesStore, launchesStore, launchDetailsStore)
-            }
+            LaunchItApp()
         }
-        launchesStore.accept(LaunchesListStore.Intent.LoadData)
-        capsulesStore.accept(CapsulesListStore.Intent.LoadData)
     }
 }
 
 @Composable
-fun LaunchItApp(
-    capsulesStore: CapsulesListStore,
-    launchesStore: LaunchesListStore,
-    launchDetailsStore: LaunchDetailsStore
-) {
-    MainScreen(capsulesStore, launchesStore, launchDetailsStore)
+fun LaunchItApp() {
+    LaunchItTheme {
+        MainScreen()
+    }
 }
 
 @Composable
-fun MainScreen(
-    capsulesStore: CapsulesListStore,
-    launchesStore: LaunchesListStore,
-    launchDetailsStore: LaunchDetailsStore
-) {
+fun MainScreen() {
     val screens = listOf(Screen.Capsules, Screen.Launches)
     val navController = rememberNavController()
     Scaffold(
@@ -83,10 +66,10 @@ fun MainScreen(
     ) {
         NavHost(navController, startDestination = Screen.Capsules.route) {
             composable(Screen.Capsules.route) {
-                CapsulesScreen(capsulesStore)
+                CapsulesScreen()
             }
             composable(Screen.Launches.route) {
-                LaunchesScreen(launchesStore, navController)
+                LaunchesScreen(navController)
             }
             composable(
                 route = Screen.LaunchDetails.route,
@@ -95,7 +78,7 @@ fun MainScreen(
                 )
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString("launchId")?.let { launchId ->
-                    LaunchDetailsScreen(launchDetailsStore, launchId)
+                    LaunchDetailsScreen(launchId)
                 }
             }
         }
