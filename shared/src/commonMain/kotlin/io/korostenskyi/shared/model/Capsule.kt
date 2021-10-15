@@ -4,7 +4,7 @@ class Capsule(
     val reuseCount: Int,
     val waterLandings: Int,
     val landLandings: Int?,
-    val lastUpdate: String,
+    val lastUpdate: String?,
     val launchesIds: List<String>,
     val serial: String,
     val status: String,

@@ -2,7 +2,7 @@ package io.korostenskyi.shared.interactor.impl
 
 import io.korostenskyi.shared.interactor.LaunchesInteractor
 import io.korostenskyi.shared.model.Launch
-import io.korostenskyi.shared.repository.LaunchesRepository
+import io.korostenskyi.shared.data.repository.LaunchesRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

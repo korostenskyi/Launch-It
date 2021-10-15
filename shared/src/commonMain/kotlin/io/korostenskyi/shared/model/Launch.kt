@@ -2,6 +2,8 @@ package io.korostenskyi.shared.model
 
 data class Launch(
     val id: String,
+    val name: String,
+    val flightNumber: Int,
     val details: String?,
     val isUpcoming: Boolean,
     val fairings: Fairings?,

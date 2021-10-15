@@ -3,62 +3,84 @@ package io.korostenskyi.launchitandroid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.navigation.NavType
+import androidx.navigation.compose.*
+import androidx.navigation.navArgument
+import io.korostenskyi.launchitandroid.ui.navigation.Screen
+import io.korostenskyi.launchitandroid.ui.screen.capsules.CapsulesScreen
+import io.korostenskyi.launchitandroid.ui.screen.launchDetails.LaunchDetailsScreen
+import io.korostenskyi.launchitandroid.ui.screen.launches.LaunchesScreen
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
-import io.korostenskyi.shared.model.Capsule
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModel<MainViewModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.loadData()
         setContent {
-            LaunchItTheme {
-                MainScreenContent(viewModel)
+            LaunchItApp()
+        }
+    }
+}
+
+@Composable
+fun LaunchItApp() {
+    LaunchItTheme {
+        MainScreen()
+    }
+}
+
+@Composable
+fun MainScreen() {
+    val screens = listOf(Screen.Capsules, Screen.Launches)
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = {
+            BottomNavigation {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+                screens.forEach { screen ->
+                    BottomNavigationItem(
+                        icon = { Icon(Icons.Filled.Favorite, null) },
+                        label = { Text(screen.label) },
+                        selected = currentRoute == screen.route,
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                navController.graph.startDestinationRoute?.let {
+                                    popUpTo(it) {
+                                        saveState = true
+                                    }
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    ) {
+        NavHost(navController, startDestination = Screen.Capsules.route) {
+            composable(Screen.Capsules.route) {
+                CapsulesScreen()
+            }
+            composable(Screen.Launches.route) {
+                LaunchesScreen(navController)
+            }
+            composable(
+                route = Screen.LaunchDetails.route,
+                arguments = listOf(
+                    navArgument("launchId") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                backStackEntry.arguments?.getString("launchId")?.let { launchId ->
+                    LaunchDetailsScreen(launchId)
+                }
             }
         }
     }
-}
-
-@Composable
-fun CapsuleCard(capsule: Capsule) {
-    Card(
-        elevation = 12.dp,
-        modifier = Modifier.clickable {  }
-    ) {
-        Column {
-            Text(
-                text = capsule.type,
-                fontWeight = FontWeight.Bold
-            )
-        }
-    }
-}
-
-@Composable
-fun CapsuleList(capsules: List<Capsule>) {
-    LazyColumn {
-        items(capsules) { capsule ->
-            CapsuleCard(capsule)
-        }
-    }
-}
-
-@Composable
-fun MainScreenContent(viewModel: MainViewModel) {
-    val capsules = viewModel.capsulesFlow.collectAsState()
-    CapsuleList(capsules.value)
 }

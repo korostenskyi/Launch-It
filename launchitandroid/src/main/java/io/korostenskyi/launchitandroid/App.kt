@@ -1,7 +1,7 @@
 package io.korostenskyi.launchitandroid
 
 import android.app.Application
-import io.korostenskyi.launchitandroid.ui.di.viewModelModule
+import io.korostenskyi.launchitandroid.di.viewModelModule
 import io.korostenskyi.shared.di.initKoin
 import org.koin.android.ext.koin.androidContext
 
@@ -13,9 +13,8 @@ class App : Application() {
     }
 
     private fun initializeKoin() {
-        initKoin {
+        initKoin(appModules = listOf(viewModelModule)) {
             androidContext(this@App)
-            modules(viewModelModule)
         }
     }
 }

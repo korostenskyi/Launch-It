@@ -2,7 +2,7 @@ package io.korostenskyi.shared.interactor.impl
 
 import io.korostenskyi.shared.interactor.CapsuleInteractor
 import io.korostenskyi.shared.model.Capsule
-import io.korostenskyi.shared.repository.CapsulesRepository
+import io.korostenskyi.shared.data.repository.CapsulesRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

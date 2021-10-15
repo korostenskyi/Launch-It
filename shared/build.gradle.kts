@@ -17,14 +17,6 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 android {
-    configurations {
-        create("androidTestApi")
-        create("androidTestDebugApi")
-        create("androidTestReleaseApi")
-        create("testApi")
-        create("testDebugApi")
-        create("testReleaseApi")
-    }
     compileSdk = 30
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
@@ -48,22 +40,30 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+
+                // Napier
                 implementation("io.github.aakira:napier:1.5.0")
-                implementation("io.ktor:ktor-client-core:1.5.4")
-                implementation("io.ktor:ktor-client-logging:1.5.4")
-                implementation("io.ktor:ktor-client-serialization:1.5.4")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.1.0")
-                implementation("io.insert-koin:koin-core:3.0.2")
+
+                // Ktor
+                implementation("io.ktor:ktor-client-core:1.6.3")
+                implementation("io.ktor:ktor-client-logging:1.6.1")
+                implementation("io.ktor:ktor-client-serialization:1.6.0")
+
+                // Koltinx Serialization
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.2.2")
+
+                // Koin
+                implementation("io.insert-koin:koin-core:3.1.2")
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-okhttp:1.5.4")
+                implementation("io.ktor:ktor-client-okhttp:1.6.3")
             }
         }
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:1.5.4")
+                implementation("io.ktor:ktor-client-ios:1.6.1")
             }
         }
     }
