@@ -31,8 +31,6 @@ struct LaunchView: View {
             HStack {
                 Text("\(launch.flightNumber)")
                 Spacer()
-            }
-            HStack {
                 Text(launch.name)
                 Spacer()
                 if let isSuccessful = launch.isSuccessful?.boolValue {
@@ -45,6 +43,19 @@ struct LaunchView: View {
                     Text("Upcoming...")
                 }
             }
+//            HStack {
+//                Text(launch.name)
+//                Spacer()
+//                if let isSuccessful = launch.isSuccessful?.boolValue {
+//                    if isSuccessful {
+//                        Text("Success")
+//                    } else {
+//                        Text("Failure")
+//                    }
+//                } else if launch.isUpcoming {
+//                    Text("Upcoming...")
+//                }
+//            }
         }
         .padding()
         .clipShape(RoundedRectangle(cornerRadius: 25.0))

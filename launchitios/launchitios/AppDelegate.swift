@@ -6,7 +6,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        KoinKt.doInitKoin(appDeclaration: { _ in })
+        KoinKt.doInitKoin(appModules: [], appDeclaration: { _ in })
         return true
     }
 

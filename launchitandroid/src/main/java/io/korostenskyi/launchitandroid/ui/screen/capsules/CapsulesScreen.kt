@@ -24,9 +24,12 @@ fun CapsulesScreen(viewModel: CapsulesViewModel = getViewModel()) {
     val capsules = viewModel.capsulesFlow.collectAsState()
     LazyColumn {
         items(capsules.value) { capsule ->
-            CapsuleCard(capsule) {
-                println(it.id)
-            }
+            CapsuleCard(
+                capsule = capsule,
+                onClick = {
+                    println(it.id)
+                }
+            )
         }
     }
 }

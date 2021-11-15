@@ -8,7 +8,7 @@ actual fun httpClient(config: HttpClientConfig<*>.() -> Unit) = HttpClient(Ios) 
 
     engine {
         configureRequest {
-            // setAllowsCellularAccess(true)
+            setAllowsCellularAccess(true)
         }
     }
 }
