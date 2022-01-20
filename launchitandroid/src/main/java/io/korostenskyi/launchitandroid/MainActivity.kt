@@ -12,7 +12,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
 import io.korostenskyi.launchitandroid.ui.navigation.Screen
-import io.korostenskyi.launchitandroid.ui.screen.capsules.CapsulesScreen
 import io.korostenskyi.launchitandroid.ui.screen.launchDetails.LaunchDetailsScreen
 import io.korostenskyi.launchitandroid.ui.screen.launches.LaunchesScreen
 import io.korostenskyi.launchitandroid.ui.theme.LaunchItTheme
@@ -36,7 +35,7 @@ fun LaunchItApp() {
 
 @Composable
 fun MainScreen() {
-    val screens = listOf(Screen.Capsules, Screen.Launches)
+    val screens = listOf(Screen.Launches)
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
@@ -46,7 +45,6 @@ fun MainScreen() {
                 screens.forEach { screen ->
                     BottomNavigationItem(
                         icon = { Icon(Icons.Filled.Favorite, null) },
-                        label = { Text(screen.label) },
                         selected = currentRoute == screen.route,
                         onClick = {
                             navController.navigate(screen.route) {
@@ -64,10 +62,7 @@ fun MainScreen() {
             }
         }
     ) {
-        NavHost(navController, startDestination = Screen.Capsules.route) {
-            composable(Screen.Capsules.route) {
-                CapsulesScreen()
-            }
+        NavHost(navController, startDestination = Screen.Launches.route) {
             composable(Screen.Launches.route) {
                 LaunchesScreen(navController)
             }
